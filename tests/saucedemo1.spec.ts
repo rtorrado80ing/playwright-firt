@@ -20,6 +20,16 @@ test('purchase an item', async ({ page }) => {
   // Obtiene todos los elementos de productos en el contenedor de inventario.
   const itemsContainer = await page.locator('#inventory_container .inventory_item').all();
 
+  const randomIndex = Math.floor(Math.random() * itemsContainer.length); // Genera un índice aleatorio para seleccionar un producto.
+  const randomItem = itemsContainer[randomIndex]; // Selecciona un producto aleatorio del inventario.
+
+  const expectedName = await randomItem.locator('.inventory_item_name').innerText(); // Obtiene el nombre del producto seleccionado.
+  const expectedDescription = await randomItem.locator('.inventory_item_desc').innerText(); // Obtiene la descripción del producto seleccionado.
+  const expectedPrice = await randomItem.locator('.inventory_item_price').innerText(); // Obtiene el precio del producto seleccionado.
+
+
+  console.log(`Price: ${expectedPrice} Name: ${expectedName} Description: ${expectedDescription}`) // Imprime el precio del producto seleccionado en la consola.
+
   // Itera sobre los elementos encontrados e imprime el texto interno de cada uno.
   for (let item of itemsContainer) {
     console.log(await item.innerText()); // Imprime en consola la información de cada producto.
