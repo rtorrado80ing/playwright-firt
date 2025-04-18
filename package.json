@@ -10,6 +10,7 @@
   "devDependencies": {
     "@playwright/test": "^1.49.1",
     "@types/node": "^22.10.1",
-    "@zerostep/playwright": "^0.1.5"
+    "@zerostep/playwright": "^0.1.5",
+    "dotenv": "^16.5.0"
   }
 }

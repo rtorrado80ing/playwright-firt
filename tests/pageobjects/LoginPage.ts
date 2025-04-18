@@ -48,7 +48,7 @@ export class LoginPage {
         await this.clickOnLogin();
     }
 
-    // Método para verificar que el inicio de sesión fue exitoso comprobando la visibilidad del ícono del carrito de compras.
+    // Método para verificar (Asserciones) que el inicio de sesión fue exitoso comprobando la visibilidad del ícono del carrito de compras.
     async checkSuccessfulLogin() {
         await expect(this.shoppingCartIcon).toBeVisible(); // Verifica que el ícono del carrito de compras está visible.
     }

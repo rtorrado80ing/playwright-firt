@@ -1,6 +1,7 @@
 // Importa los módulos necesarios desde Playwright:
 // - `test`: Permite definir y ejecutar pruebas.
 // - `expect`: Se utiliza para realizar validaciones dentro de las pruebas.
+// - Carrito de compras: Se utiliza para almacenar los productos seleccionados por el usuario antes de proceder al pago.
 import { test, expect } from '@playwright/test';
 
 // Define una prueba llamada "purchase an item".
