@@ -1,0 +1,29 @@
+name: Ejecutar pruebas API con Playwright
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  run-api-tests:
+    runs-on: ubuntu-latest
+
+    env:
+      API_TOKEN: ${{ secrets.API_TOKEN }}
+
+    steps:
+      - name: 🧾 Checkout del repositorio
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: 📦 Instalar dependencias
+        run: npm install
+
+      - name: ▶️ Ejecutar pruebas API (proyecto: API Tests)
+        run: npx playwright test --project="API Tests"
