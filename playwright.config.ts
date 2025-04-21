@@ -41,6 +41,8 @@ export default defineConfig({
     headless: false, // Modo no headless para ver el navegador
     baseURL: process.env.URL, // URL base tomada desde el archivo .env
     trace: 'on-first-retry', // Genera trazas si la prueba falla en el primer intento
+    screenshot: 'on', // Toma capturas de pantalla en cada paso
+    video: 'on-first-retry', // Graba video si la prueba falla en el primer intento
   },
 
   /* Configura diferentes proyectos (navegadores/dispositivos) */
@@ -53,6 +55,18 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { browserName: 'chromium' },
+    },
+    {
+      name: 'API Tests',
+      testMatch: 'APITests/**/*', // Coincide con archivos que terminan en .api.ts
+      use: { 
+        baseURL: 'https://api.github.com', // URL base para las pruebas de API,
+        extraHTTPHeaders: {
+          'Accept': 'application/vnd.github.v3+json', // Cabecera de aceptación para la API de GitHub
+          //se debe setear el token con export en mac set en windows API_TOKEN='token guardado en github'
+          'Authorization': `Bearer ${process.env.API_TOKEN}`, // Token de autenticación para la API de GitHub
+        }
+      }
     },
     /*
     {

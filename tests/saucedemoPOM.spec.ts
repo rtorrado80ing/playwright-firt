@@ -4,6 +4,7 @@
 // - Carrito de compras: Se utiliza para almacenar los productos seleccionados por el usuario antes de proceder al pago.
 import { test, expect } from '@playwright/test';
 import { LoginPage } from './pageobjects/LoginPage';
+import { SandboxPage } from './pageobjects/SandboxPage';
 
 // Define una prueba llamada "purchase an item".
 test('purchase an item', async ({ page }) => {
@@ -37,6 +38,9 @@ npx playwright test --project=chromium --grep "navigate with varible"
 */
  test('navigate with varible ', async ({ page }) => {
     // Navega al sitio web de Sauce Demo.
+    if (!process.env.URL) {
+        throw new Error('Environment variable URL is not defined');
+    }
     await page.goto(process.env.URL);
     await page.pause(); // Pausa la ejecución durante 2 segundos (2000 milisegundos).
     // Llama a la función de inicio de sesión con credenciales POM.
@@ -45,4 +49,6 @@ npx playwright test --project=chromium --grep "navigate with varible"
     await loginPage.checkSuccessfulLogin(); // Verifica que el inicio de sesión fue exitoso.
 
  })
+
+ 
 

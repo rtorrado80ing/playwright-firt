@@ -4,7 +4,7 @@
 import { test, expect } from '@playwright/test';
 
 // Prueba principal: Realiza el inicio de sesión en el sitio y lista los productos disponibles.
-test('purchase an item', async ({ page }) => {
+test('purchase an item', async ({ page }, testInfo) => {
   // Navega al sitio web de Sauce Demo.
   await page.goto('https://www.saucedemo.com/');
 
@@ -14,8 +14,16 @@ test('purchase an item', async ({ page }) => {
   // Llena el campo de contraseña con "secret_sauce".
   await page.getByRole('textbox', { name: 'Password' }).fill('secret_sauce');
 
+  await page.screenshot({ path: 'capturas/login.png' }); // Toma una captura de pantalla de la página actual y la guarda como "login.png".
+
   // Simula un clic en el botón "Login".
   await page.getByRole('button', { name: 'Login' }).click();
+
+    // Espera 2 segundos antes de continuar (esto es opcional y puede eliminarse si no es necesario).
+    await page.waitForTimeout(2000); // Espera 2 segundos (2000 milisegundos).
+    await page.screenshot({ path: 'capturas/inventario.png', fullPage: true }); // Toma una captura de pantalla de la página actual y la guarda como "inventario.png".
+
+//La mejor forma es configurar desde el archivo de configuracion playwright.config.ts linea 44
 
   // Obtiene todos los elementos de productos en el contenedor de inventario.
   const itemsContainer = await page.locator('#inventory_container .inventory_item').all();
@@ -35,6 +43,13 @@ test('purchase an item', async ({ page }) => {
     console.log(await item.innerText()); // Imprime en consola la información de cada producto.
   }
 
+  await testInfo.attach('items', {
+    body: await page.screenshot(), // Toma una captura de pantalla de la página actual y la guarda como "items.png".  
+    contentType: 'image/png', // Tipo de contenido de la captura de pantalla.
+  })
+
+
+    await page.waitForTimeout(2000); // Espera 2 segundos (2000 milisegundos).
   // (Código comentado) Ejemplo para validar el título de la página.
   // Podría agregarse para verificar que la página se cargó correctamente después del inicio de sesión.
   // await expect(page).toHaveTitle(/Playwright/);
